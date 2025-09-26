@@ -389,7 +389,13 @@
         });
 
     </script>
-    <script async type='module' src='https://interfaces.zapier.com/assets/web-components/zapier-interfaces/zapier-interfaces.esm.js'></script>
-<zapier-interfaces-chatbot-embed is-popup='true' chatbot-id='cmg0couqc009rhdlkv8hkbepp'></zapier-interfaces-chatbot-embed>
+  <script type="module">
+    import Chatbot from "https://cdn.jsdelivr.net/npm/flowise-embed/dist/web.js"
+    Chatbot.init({
+        chatflowid: "e34bd33f-e222-4d7d-a17f-5c7f054dca87",
+        apiHost: "https://cloud.flowiseai.com",
+    })
+</script>
+
 </body>
 </html>
