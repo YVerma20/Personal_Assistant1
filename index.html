@@ -4,19 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Yash's Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <style>
-        /* Basic CSS for styling */
+        :root {
+            --primary-color: #1e90ff;
+            --dark-color: #333;
+            --light-color: #f4f4f9;
+            --background-color: #fff;
+            --text-color: #333;
+            --shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f9;
-            color: #333;
+            background-color: var(--light-color);
+            color: var(--text-color);
             scroll-behavior: smooth;
         }
 
         header {
-            background-color: #333;
+            background-color: var(--dark-color);
             color: #fff;
             padding: 1rem 2rem;
             display: flex;
@@ -24,7 +33,7 @@
             align-items: center;
             position: sticky;
             top: 0;
-            z-index: 100;
+            z-index: 1000;
         }
 
         header h1 {
@@ -32,31 +41,46 @@
             font-size: 1.8rem;
         }
 
+        nav .nav-links {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        nav .nav-links li {
+            margin-left: 25px;
+        }
+        
         nav a {
             color: #fff;
             text-decoration: none;
-            margin-left: 20px;
             font-size: 1.1rem;
             transition: color 0.3s;
         }
 
         nav a:hover {
-            color: #1e90ff;
+            color: var(--primary-color);
+        }
+
+        .menu-icon {
+            display: none;
+            font-size: 1.8rem;
+            cursor: pointer;
         }
 
         section {
-            padding: 4rem 2rem;
-            max-width: 900px;
+            padding: 5rem 2rem;
+            max-width: 960px;
             margin: 0 auto;
-            border-bottom: 1px solid #ddd;
         }
         
         #home {
-            text-align: center;
             min-height: 80vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
+            text-align: center;
         }
 
         #home h2 {
@@ -64,17 +88,72 @@
             margin-bottom: 0.5rem;
         }
 
-        #home p {
-            font-size: 1.5rem;
+        #home .subtitle {
+            font-size: 1.7rem;
             color: #555;
         }
-
-        h2 {
-            font-size: 2.5rem;
-            margin-bottom: 2rem;
-            text-align: center;
+        
+        /* Typewriter effect */
+        .subtitle .typewriter {
+            border-right: 2px solid #555;
+            animation: blink 0.75s step-end infinite;
+        }
+        
+        @keyframes blink {
+            from, to { border-color: transparent }
+            50% { border-color: #555; }
         }
 
+        h2.section-title {
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            text-align: center;
+            position: relative;
+        }
+        
+        h2.section-title::after {
+            content: '';
+            width: 60px;
+            height: 4px;
+            background: var(--primary-color);
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        /* Skills Section */
+        .skills-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1.5rem;
+            text-align: center;
+        }
+        
+        .skill-item {
+            background: var(--background-color);
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .skill-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+        }
+
+        .skill-item i {
+            font-size: 3rem;
+            color: var(--primary-color);
+        }
+
+        .skill-item p {
+            margin: 1rem 0 0;
+            font-weight: bold;
+        }
+
+        /* Projects Section */
         .project-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -82,11 +161,11 @@
         }
 
         .project-card {
-            background-color: #fff;
+            background-color: var(--background-color);
             border: 1px solid #ddd;
             border-radius: 8px;
             padding: 1.5rem;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            box-shadow: var(--shadow);
             transition: transform 0.3s, box-shadow 0.3s;
         }
 
@@ -97,30 +176,50 @@
 
         .project-card h3 {
             margin-top: 0;
-            color: #1e90ff;
+            color: var(--primary-color);
         }
-
-        .project-card a {
-            text-decoration: none;
-            color: #333;
-            font-weight: bold;
-        }
-
+        
         #contact p {
             text-align: center;
             font-size: 1.2rem;
         }
         
         #contact a {
-            color: #1e90ff;
+            color: var(--primary-color);
             text-decoration: none;
         }
 
         footer {
             text-align: center;
             padding: 2rem;
-            background-color: #333;
+            background-color: var(--dark-color);
             color: #fff;
+        }
+
+        /* Responsive Design for Mobile Nav */
+        @media (max-width: 768px) {
+            .menu-icon {
+                display: block;
+            }
+            nav .nav-links {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                position: absolute;
+                top: 60px; /* Adjust based on header height */
+                left: 0;
+                background-color: var(--dark-color);
+            }
+            nav .nav-links.active {
+                display: flex;
+            }
+            nav .nav-links li {
+                text-align: center;
+                margin: 0;
+                padding: 1rem 0;
+                width: 100%;
+                border-top: 1px solid #444;
+            }
         }
     </style>
 </head>
@@ -129,23 +228,27 @@
     <header>
         <h1>Yash</h1>
         <nav>
-            <a href="#home">Home</a>
-            <a href="#about">About</a>
-            <a href="#projects">Projects</a>
-            <a href="#contact">Contact</a>
+            <div class="menu-icon" id="menu-icon">
+                <i class="fas fa-bars"></i>
+            </div>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
         </nav>
     </header>
 
     <main>
         <section id="home">
-            <h2>Welcome to My Portfolio</h2>
-            <p>I build things for the web.</p>
-            </section>
+            <h2>Hey, I'm Yash</h2>
+            <p class="subtitle">I'm a <span class="typewriter"></span></p>
+        </section>
         
-        <hr/>
-
         <section id="about">
-            <h2>About Me</h2>
+            <h2 class="section-title">About Me</h2>
             <p>
                 Hello! I'm Yash, a passionate developer with a love for creating clean, efficient, and user-friendly applications. I specialize in front-end development and have experience with technologies like HTML, CSS, JavaScript, and React. 
             </p>
@@ -154,23 +257,57 @@
             </p>
         </section>
 
-        <hr/>
+        <section id="skills">
+            <h2 class="section-title">My Skills</h2>
+            <div class="skills-container">
+                <div class="skill-item">
+                    <i class="fa-brands fa-html5"></i>
+                    <p>HTML5</p>
+                </div>
+                <div class="skill-item">
+                    <i class="fa-brands fa-css3-alt"></i>
+                    <p>CSS3</p>
+                </div>
+                <div class="skill-item">
+                    <i class="fa-brands fa-js"></i>
+                    <p>JavaScript</p>
+                </div>
+                <div class="skill-item">
+                    <i class="fa-brands fa-react"></i>
+                    <p>React</p>
+                </div>
+                <div class="skill-item">
+                    <i class="fa-brands fa-node-js"></i>
+                    <p>Node.js</p>
+                </div>
+                <div class="skill-item">
+                    <i class="fa-brands fa-git-alt"></i>
+                    <p>Git</p>
+                </div>
+                 <div class="skill-item">
+                    <i class="fa-brands fa-python"></i>
+                    <p>Python</p>
+                </div>
+                 <div class="skill-item">
+                    <i class="fa-brands fa-figma"></i>
+                    <p>Figma</p>
+                </div>
+            </div>
+        </section>
 
         <section id="projects">
-            <h2>My Projects</h2>
+            <h2 class="section-title">My Projects</h2>
             <div class="project-container">
                 <div class="project-card">
                     <h3>Project One Title</h3>
                     <p>A brief description of your project. Explain the technology used and the problem it solves.</p>
                     <a href="#" target="_blank">View Project</a>
                 </div>
-
                 <div class="project-card">
                     <h3>Project Two Title</h3>
                     <p>A brief description of your project. Explain the technology used and the problem it solves.</p>
                     <a href="#" target="_blank">View Project</a>
                 </div>
-
                 <div class="project-card">
                     <h3>Project Three Title</h3>
                     <p>A brief description of your project. Explain the technology used and the problem it solves.</p>
@@ -179,20 +316,11 @@
             </div>
         </section>
 
-        <hr/>
-
         <section id="contact">
-            <h2>Get In Touch</h2>
-            <p>
-                I'm always open to discussing new projects or opportunities. Feel free to reach out!
-            </p>
+            <h2 class="section-title">Get In Touch</h2>
+            <p>I'm always open to discussing new projects or opportunities. Feel free to reach out!</p>
             <p>
                 <strong>Email:</strong> <a href="mailto:your-email@example.com">your-email@example.com</a>
-            </p>
-            <p>
-                <a href="#" target="_blank">LinkedIn</a> | 
-                <a href="#" target="_blank">GitHub</a> | 
-                <a href="#" target="_blank">Twitter</a>
             </p>
         </section>
     </main>
@@ -201,5 +329,65 @@
         <p>&copy; 2025 Yash. All rights reserved.</p>
     </footer>
 
+    <script>
+        // --- Mobile Nav Toggle ---
+        const menuIcon = document.getElementById('menu-icon');
+        const navLinks = document.getElementById('nav-links');
+
+        menuIcon.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // --- Typewriter Effect ---
+        class Typewriter {
+            constructor(element, words, wait = 2000) {
+                this.element = element;
+                this.words = words;
+                this.txt = '';
+                this.wordIndex = 0;
+                this.wait = parseInt(wait, 10);
+                this.isDeleting = false;
+                this.type();
+            }
+
+            type() {
+                const current = this.wordIndex % this.words.length;
+                const fullTxt = this.words[current];
+
+                if (this.isDeleting) {
+                    this.txt = fullTxt.substring(0, this.txt.length - 1);
+                } else {
+                    this.txt = fullTxt.substring(0, this.txt.length + 1);
+                }
+
+                this.element.innerHTML = `<span class="wrap">${this.txt}</span>`;
+                let typeSpeed = 150;
+
+                if (this.isDeleting) {
+                    typeSpeed /= 2;
+                }
+
+                if (!this.isDeleting && this.txt === fullTxt) {
+                    typeSpeed = this.wait;
+                    this.isDeleting = true;
+                } else if (this.isDeleting && this.txt === '') {
+                    this.isDeleting = false;
+                    this.wordIndex++;
+                    typeSpeed = 400;
+                }
+
+                setTimeout(() => this.type(), typeSpeed);
+            }
+        }
+
+        // Initialize Typewriter on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            const typewriterElement = document.querySelector('.typewriter');
+            // Edit these words to change the typewriter text
+            const words = ["Web Developer.", "Problem Solver.", "Creative Thinker."];
+            new Typewriter(typewriterElement, words);
+        });
+
+    </script>
 </body>
 </html>
